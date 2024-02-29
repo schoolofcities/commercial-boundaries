@@ -127,16 +127,20 @@ def overall_process(bound_data, city, crs):
     office.to_parquet(office_dir)
 
    
-os.chdir("put your base directory")
-ma_america = gpd.read_parquet('put the given metropolitan area files (top_50_ma_us_ca.parquet)')
+#os.chdir("put your base directory")
+#ma_america = gpd.read_parquet('put the given metropolitan area files (top_50_ma_us_ca.parquet)')
+
+os.chdir("/Users/byeonghwa/Desktop/all/retail_boundary")
+ma_america = gpd.read_parquet('./MA/top_50_ma_us_ca.parquet')
 
 
 for x in ma_america.index:
     temp_ma = ma_america.loc[ma_america.index == x].copy()
     city = temp_ma['NAME'].tolist()[0].split(',')[0]
     city = city.replace(' ', '-')
-    print(city)
+    if city == 'Halifax':
+        print(city)
 
-    crs = 4326
-    
-    overall_process(temp_ma, city, crs)
+        crs = 4326
+        
+        overall_process(temp_ma, city, crs)

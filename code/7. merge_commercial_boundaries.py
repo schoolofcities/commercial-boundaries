@@ -47,4 +47,4 @@ all_cb = all_cb.reset_index(drop = False)
 all_cb = all_cb.rename({'index':'CB_ID'}, axis = 1)
 #save the merged commercial boundaries
 out_nm = 'put your path'
-all_cb.to_file(out_nm, driver = 'GPKG')
+all_cb.to_parquet(out_nm)
