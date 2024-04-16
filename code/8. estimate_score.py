@@ -12,7 +12,7 @@ import os
 import matplotlib.pyplot as plt
 
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 cb = gpd.read_parquet('put_your_merged_cb_results')
 
@@ -29,6 +29,13 @@ cb[sel_list] = ss.fit_transform(cb[sel_list])
 pca = PCA(n_components=1)
 pca.fit(cb[sel_list])
 cb['commercial_score'] = pca.transform(cb[sel_list])
+
+print(cb['commercial_score'].min(), cb['commercial_score'].max())
+
+mm = MinMaxScaler(feature_range=(1, 10))
+cb['commercial_score'] = mm.fit_transform(cb[['commercial_score']])
+
+
 print('pca_ratio', pca.explained_variance_ratio_)
 print('pca_value', pca.singular_values_)
 
